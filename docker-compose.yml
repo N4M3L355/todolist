@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+
+  web:
+    build: .
+    image: todolist
+    restart: on-failure
+    command: npm start
+    volumes:
+      - ./src:/app/src
+    labels:
+      - "traefik.frontend.rule=Host:localhost,www.todo.xn--krl-fla.com, todo.xn--krl-fla.com"
+
+  proxy:
+    image: traefik
+    command: --api --docker  # Enables the web UI and tells Træfik to listen to docker
+    ports:
+      - "80:80"
+      - "8080:8080" # The Web UI (enabled by --api)
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+
+networks:
+  default:
+    external:
+      name: traefik_default
