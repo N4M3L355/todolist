@@ -10,7 +10,7 @@ services:
     volumes:
       - ./src:/app/src
     labels:
-      - "traefik.frontend.rule=Host:localhost,www.todo.xn--krl-fla.com, todo.xn--krl-fla.com"
+      - "traefik.frontend.rule=Host:www.todo.xn--krl-fla.com, todo.xn--krl-fla.com"
 
   proxy:
     image: traefik
